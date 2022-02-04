@@ -1,9 +1,9 @@
 import path from 'path';
 // import fs from 'fs';
 import * as core from '@actions/core';
-import extractCodeOwners from './extract-codeowners';
-import extractFileMatches from './extract-filematches';
-import { getVersionControlledFiles } from './utils';
+import extractCodeOwners from 'src/codeowners/extract-codeowners';
+import extractFileMatches from 'src/codeowners/extract-filematches';
+import { getVersionControlledFiles } from 'src/codeowners/utils';
 
 // const filepath = './codeowner-information.json';
 

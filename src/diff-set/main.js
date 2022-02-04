@@ -4,8 +4,8 @@ import {
 import { Octokit } from '@octokit/rest';
 import throttlingPlugin from '@octokit/plugin-throttling';
 import { env } from 'process';
-import { GitHubDiff, sets } from './diff';
-import { parseConfig, intoParams } from './util';
+import { GitHubDiff, sets } from 'src/diff-set/diff';
+import { parseConfig, intoParams } from 'src/diff-set/util';
 
 async function run() {
     try {

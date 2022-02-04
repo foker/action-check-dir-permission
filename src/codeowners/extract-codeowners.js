@@ -1,4 +1,4 @@
-import { getFileContents } from './utils';
+import { getFileContents } from 'src/codeowners/utils';
 
 const codeownersRe = new RegExp('^[^#](.*)$', 'mg');
 
