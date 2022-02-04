@@ -1,0 +1,28 @@
+{
+  "name": "action-check-dir-permission",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@actions/core": "^1.6.0",
+    "@actions/github": "^5.0.0",
+    "@octokit/plugin-throttling": "^3.5.2",
+    "@octokit/rest": "^18.12.0",
+    "ignore": "^5.2.0",
+    "minimatch": "^3.0.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/foker/action-check-dir-permission.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/foker/action-check-dir-permission/issues"
+  },
+  "homepage": "https://github.com/foker/action-check-dir-permission#readme"
+}
