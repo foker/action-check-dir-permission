@@ -1,13 +1,13 @@
-import {
+const {
     setFailed, setOutput, debug, warning,
-} from '@actions/core';
-import { Octokit } from '@octokit/rest';
-import throttlingPlugin from '@octokit/plugin-throttling';
-import { env } from 'process';
-import { GitHubDiff, sets } from 'src/diff-set/diff';
-import { parseConfig, intoParams } from 'src/diff-set/util';
+} = require('@actions/core');
+const { Octokit } = require('@octokit/rest');
+const throttlingPlugin = require('@octokit/plugin-throttling');
+const { env } = require('process');
+const { GitHubDiff, sets } = require('./diff');
+const { parseConfig, intoParams } = require('./util');
 
-async function run() {
+module.exports = async function() {
     try {
         const config = parseConfig(env);
         Octokit.plugin(throttlingPlugin);
@@ -32,17 +32,9 @@ async function run() {
                 },
             }),
         );
-        const diffset = await differ.diff(intoParams(config));
-        setOutput('files', diffset.join(' '));
-        const filterSets = sets(config.fileFilters, diffset);
-        Array.from(Object.entries(filterSets)).forEach(([key, matches]) => {
-            debug(`files for ${key} ${matches}`);
-            setOutput(key, matches.join(' '));
-        });
+        return await differ.diff(intoParams(config));
     } catch (error) {
         console.log(error);
         setFailed(error.message);
     }
 }
-
-run();

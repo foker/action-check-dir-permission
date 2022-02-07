@@ -1,20 +1,19 @@
-import path from 'path';
-// import fs from 'fs';
-import * as core from '@actions/core';
-import extractCodeOwners from 'src/codeowners/extract-codeowners';
-import extractFileMatches from 'src/codeowners/extract-filematches';
-import { getVersionControlledFiles } from 'src/codeowners/utils';
+const path = require('path');
+const core = require('@actions/core');
+const extractCodeOwners = require('./extract-codeowners');
+const extractFileMatches = require('./extract-filematches');
+const { getVersionControlledFiles } = require('./utils');
 
 // const filepath = './codeowner-information.json';
 
-async function extractCodeOwnerInfo(codeownerPath, fileMatchInfo) {
+async function extractCodeOwnerInfo(codeownerPath, fileMatchInfo, byAuthor) {
     try {
         let results = {};
         const filePath = path.join(
             process.env.GITHUB_WORKSPACE || './',
             codeownerPath,
         );
-        const codeownerInfo = await extractCodeOwners(filePath);
+        const codeownerInfo = await extractCodeOwners(filePath, byAuthor);
         core.setOutput('codeowners', JSON.stringify(codeownerInfo));
         results = { codeownerInfo };
 
@@ -29,6 +28,8 @@ async function extractCodeOwnerInfo(codeownerPath, fileMatchInfo) {
             results = { codeownerInfo, fileMatches };
         }
 
+
+
         return results;
     } catch (error) {
         core.setFailed(error.message);
@@ -38,4 +39,4 @@ async function extractCodeOwnerInfo(codeownerPath, fileMatchInfo) {
 const codeownerPath = core.getInput('path') || './CODEOWNERS';
 const fileMatchInfo = core.getInput('file_match_info').toLowerCase() === 'true';
 
-extractCodeOwnerInfo(codeownerPath, fileMatchInfo);
+module.exports = (byAuthor) => extractCodeOwnerInfo(codeownerPath, fileMatchInfo, byAuthor);
